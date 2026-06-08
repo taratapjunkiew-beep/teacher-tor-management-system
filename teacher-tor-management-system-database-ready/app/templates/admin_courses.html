@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>จัดการรายวิชา</h1>
+<a class="button" href="/admin/courses/new">เพิ่มรายวิชา</a>
+<a class="button secondary" href="/admin/import">นำเข้า CSV</a>
+<table>
+<thead><tr><th>รหัสวิชา</th><th>ชื่อวิชา</th><th>หลักสูตร</th><th>ท-ป-น</th><th>สถานะ</th><th>แก้ไข</th></tr></thead>
+<tbody>
+{% for c in courses %}
+<tr>
+<td>{{ c.code }}</td><td>{{ c.name }}</td><td>{{ c.curriculum }}</td><td>{{ c.theory_hours }}-{{ c.practice_hours }}-{{ c.credits }}</td>
+<td>{% if c.is_verified %}ตรวจแล้ว{% else %}รอตรวจ{% endif %}</td>
+<td><a href="/admin/courses/{{ c.id }}/edit">แก้ไข</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

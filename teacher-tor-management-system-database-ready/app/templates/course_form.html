@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if course %}แก้ไขรายวิชา{% else %}เพิ่มรายวิชา{% endif %}</h1>
+<form method="post" action="/admin/courses/save" class="wide-form">
+<input type="hidden" name="course_id" value="{{ course.id if course else 0 }}">
+<div class="row"><div><label>รหัสวิชา</label><input name="code" value="{{ course.code if course else '' }}" required></div><div><label>ชื่อวิชา</label><input name="name" value="{{ course.name if course else '' }}" required></div></div>
+<div class="row"><div><label>ระดับ</label><input name="level" value="{{ course.level if course else 'ปวช.' }}"></div><div><label>หลักสูตร</label><input name="curriculum" value="{{ course.curriculum if course else 'หลักสูตรประกาศนียบัตรวิชาชีพ พุทธศักราช 2567' }}"></div></div>
+<div class="row"><div><label>ประเภทวิชา</label><input name="program_type" value="{{ course.program_type if course else '' }}"></div><div><label>กลุ่มอาชีพ</label><input name="occupational_group" value="{{ course.occupational_group if course else '' }}"></div></div>
+<div class="row"><div><label>สาขาวิชา</label><input name="major" value="{{ course.major if course else '' }}"></div><div class="row three"><div><label>ทฤษฎี</label><input type="number" name="theory_hours" value="{{ course.theory_hours if course else 1 }}"></div><div><label>ปฏิบัติ</label><input type="number" name="practice_hours" value="{{ course.practice_hours if course else 3 }}"></div><div><label>หน่วยกิต</label><input type="number" name="credits" value="{{ course.credits if course else 2 }}"></div></div></div>
+<label>อ้างอิงมาตรฐาน</label><textarea name="standard_ref" rows="2">{{ course.standard_ref if course else '' }}</textarea>
+<label>ผลลัพธ์การเรียนรู้ระดับรายวิชา</label><textarea name="learning_outcome" rows="3">{{ course.learning_outcome if course else '' }}</textarea>
+<label>จุดประสงค์รายวิชา ใส่ข้อละ 1 บรรทัด</label><textarea name="objectives" rows="5">{% if course %}{% for x in course.objectives|loads %}{{ x }}
+{% endfor %}{% endif %}</textarea>
+<label>สมรรถนะรายวิชา ใส่ข้อละ 1 บรรทัด</label><textarea name="competencies" rows="5">{% if course %}{% for x in course.competencies|loads %}{{ x }}
+{% endfor %}{% endif %}</textarea>
+<label>คำอธิบายรายวิชา</label><textarea name="description" rows="6">{{ course.description if course else '' }}</textarea>
+<label>มาตรฐานอาชีพ ถ้ามี</label><textarea name="occupational_standard" rows="4">{{ course.occupational_standard if course else '' }}</textarea>
+<label>การประเมินผลลัพธ์รายวิชา</label><textarea name="assessment" rows="3">{{ course.assessment if course else '' }}</textarea>
+<label>หมายเหตุแหล่งข้อมูล</label><textarea name="source_note" rows="2">{{ course.source_note if course else '' }}</textarea>
+<label class="checkbox"><input type="checkbox" name="is_verified" {% if course and course.is_verified %}checked{% endif %}> ตรวจสอบแล้ว</label>
+<label class="checkbox"><input type="checkbox" name="is_active" {% if not course or course.is_active %}checked{% endif %}> เปิดใช้งาน</label>
+<button>บันทึก</button>
+</form>
+{% endblock %}

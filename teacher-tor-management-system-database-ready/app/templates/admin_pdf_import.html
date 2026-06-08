@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>นำเข้า PDF สำนักมาตรฯ อัตโนมัติ</h1>
+
+<section class="panel">
+  <h2>อัปโหลด PDF แล้วนำเข้าฐานข้อมูลทันที</h2>
+  <p class="muted">
+    ระบบจะอ่านไฟล์ PDF แล้วแยกรหัสวิชา ชื่อวิชา ทฤษฎี-ปฏิบัติ-หน่วยกิต จุดประสงค์ สมรรถนะ และคำอธิบายรายวิชา จากนั้นบันทึกลงฐานข้อมูลให้ครูค้นจากรหัสวิชาได้ทันที
+  </p>
+  {% if message %}<div class="success-box">{{ message }}</div>{% endif %}
+  <form method="post" action="/admin/pdf-import/upload" enctype="multipart/form-data">
+    <label>เลือกไฟล์ PDF สำนักมาตรฯ</label>
+    <input type="file" name="file" accept=".pdf" required>
+    <button>นำเข้า PDF อัตโนมัติ</button>
+  </form>
+</section>
+
+{% if courses %}
+<section class="panel">
+  <h2>รายการที่นำเข้า/อัปเดต</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>รหัสวิชา</th>
+        <th>ชื่อวิชา</th>
+        <th>ท-ป-น</th>
+        <th>คำอธิบาย</th>
+        <th>สถานะ</th>
+        <th>คำที่ควรตรวจ</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in courses %}
+      <tr>
+        <td>{{ c.code }}</td>
+        <td>{{ c.name }}</td>
+        <td>{{ c.theory_hours }}-{{ c.practice_hours }}-{{ c.credits }}</td>
+        <td>{% if c.description %}พบ{% else %}ไม่พบ/ต้องตรวจ{% endif %}</td>
+        <td>{% if c.is_verified %}พร้อมใช้{% else %}ควรตรวจเพิ่ม{% endif %}</td>
+        <td>
+          {% if c.quality_missing %}ขาด: {{ c.quality_missing }}{% endif %}
+          {% if c.quality_suspicious %}<br>เพี้ยน: {{ c.quality_suspicious }}{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
+<section class="panel">
+  <h2>ข้อควรรู้</h2>
+  <p>
+    ระบบมีตัวแก้คำเพี้ยนจาก PDF อัตโนมัติ เช่น กลุ!ม → กลุ่ม, ชั่วชั่โมง → ชั่วโมง, การเรียนรี รู้ → การเรียนรู้, อาชีพชี → อาชีพ และจัดช่องว่างคำไทยให้ถูกต้องมากขึ้น แต่ถ้า PDF เพี้ยนมาก ระบบจะแสดงสถานะ “ควรตรวจเพิ่ม” ให้แอดมินตรวจในเมนู “จัดการรายวิชา” อีกครั้ง
+  </p>
+</section>
+{% endblock %}

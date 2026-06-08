@@ -1,0 +1,26 @@
+@font-face{font-family:"TH SarabunPSK";src:local("TH SarabunPSK")}
+:root{--bg:#f5f7fb;--card:#fff;--text:#1f2937;--muted:#64748b;--primary:#2563eb;--primary-dark:#1e40af;--border:#dbe2ea;--danger:#b91c1c;--success:#166534}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"TH SarabunPSK","Tahoma",sans-serif;font-size:21px}
+.topbar{background:#0f172a;color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:28px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin-left:18px;font-size:20px}
+.container{max-width:1180px;margin:28px auto;padding:0 18px}
+.login-card,.panel,.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 20px rgba(15,23,42,.06)}
+.login-card{max-width:460px;margin:60px auto;padding:32px;text-align:center}
+.muted{color:var(--muted)}
+.error{background:#fee2e2;color:var(--danger);padding:10px 14px;border-radius:10px;margin:14px 0}
+.success-box,.success{background:#ecfdf5;border-color:#bbf7d0}
+.success-box{color:var(--success);padding:10px 14px;border-radius:10px;margin:14px 0}
+label{display:block;font-weight:bold;margin:12px 0 4px}
+input,textarea,select{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit;background:white}
+button,.button{display:inline-block;margin-top:16px;background:var(--primary);color:white;border:0;border-radius:10px;padding:10px 18px;font:inherit;cursor:pointer;text-decoration:none}
+button:hover,.button:hover{background:var(--primary-dark)}
+.button.secondary{background:#475569}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0}
+.card{padding:22px}.card h2{font-size:46px;margin:0;color:var(--primary)}
+.panel{padding:22px;margin-bottom:22px}.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.row.three{grid-template-columns:repeat(3,1fr)}
+table{width:100%;border-collapse:collapse;background:white;margin-top:16px}th,td{border:1px solid var(--border);padding:8px 10px;vertical-align:top}th{background:#e8f0fe}
+.checkbox{display:inline-flex;gap:8px;align-items:center;margin-right:16px}.checkbox input{width:auto}
+pre{white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:14px;border-radius:12px;overflow:auto}
+@media(max-width:800px){.topbar{flex-direction:column;align-items:flex-start}nav a{display:inline-block;margin:8px 12px 0 0}.grid,.row{grid-template-columns:1fr}}

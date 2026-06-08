@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>หน้าหลัก</h1>
+<p>ยินดีต้อนรับ {{ user.full_name or user.username }} ({{ user.role }})</p>
+<div class="grid">
+  <div class="card"><h2>{{ course_count }}</h2><p>รายวิชาในฐานข้อมูล</p></div>
+  <div class="card"><h2>{{ verified_count }}</h2><p>ตรวจสอบแล้ว</p></div>
+  <div class="card"><h2>{{ files_count }}</h2><p>ไฟล์หลักสูตร</p></div>
+</div>
+<a class="button" href="/create">สร้างโครงการสอน</a>
+{% if user.role == "admin" %}
+<a class="button secondary" href="/admin/courses">จัดการรายวิชา</a>
+<a class="button secondary" href="/admin/pdf-import">นำเข้า PDF อัตโนมัติ</a>
+<a class="button secondary" href="/admin/import">นำเข้า CSV หลักสูตร</a>
+{% endif %}
+{% endblock %}

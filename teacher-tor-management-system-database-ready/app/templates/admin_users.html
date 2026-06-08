@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>ผู้ใช้</h1>
+<section class="panel">
+<h2>เพิ่มผู้ใช้</h2>
+<form method="post" action="/admin/users/create">
+<div class="row"><div><label>Username</label><input name="username" required></div><div><label>ชื่อ-สกุล</label><input name="full_name"></div></div>
+<div class="row"><div><label>Password</label><input name="password" type="password" required></div><div><label>Role</label><select name="role"><option value="teacher">teacher</option><option value="admin">admin</option></select></div></div>
+<button>เพิ่มผู้ใช้</button>
+</form>
+</section>
+<table><thead><tr><th>Username</th><th>ชื่อ</th><th>Role</th><th>สถานะ</th></tr></thead>
+<tbody>{% for u in users %}<tr><td>{{ u.username }}</td><td>{{ u.full_name }}</td><td>{{ u.role }}</td><td>{% if u.is_active %}ใช้งาน{% else %}ปิด{% endif %}</td></tr>{% endfor %}</tbody></table>
+{% endblock %}

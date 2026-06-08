@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>สร้างโครงการสอน</h1>
+<section class="panel">
+  <h2>กรอกเพียงรหัสวิชาและชื่อวิชา</h2>
+  <p class="muted">ระบบจะค้นข้อมูลหลักสูตรจากฐานข้อมูลสำนักมาตรฯ ที่แอดมินนำเข้าไว้ แล้วจัดทำโครงการสอนเป็นไฟล์ Word ให้สมบูรณ์</p>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post" action="/find-course">
+    <div class="row">
+      <div>
+        <label>รหัสวิชา</label>
+        <input name="course_code" value="{{ input_code or '' }}" placeholder="เช่น 21909-1009" required>
+      </div>
+      <div>
+        <label>ชื่อวิชา</label>
+        <input name="course_name" value="{{ input_name or '' }}" placeholder="เช่น ระบบเครือข่ายคอมพิวเตอร์" required>
+      </div>
+    </div>
+    <button>ค้นหารายวิชา</button>
+  </form>
+</section>
+
+{% if course %}
+<section class="panel success">
+  <h2>พบรายวิชา</h2>
+  <p><strong>{{ course.code }}</strong> {{ course.name }}</p>
+  <p>{{ course.curriculum }} | {{ course.program_type }} | {{ course.occupational_group }} | {{ course.major }}</p>
+  <p>ชั่วโมง: {{ course.theory_hours }}-{{ course.practice_hours }}-{{ course.credits }} | สถานะ: {% if course.is_verified %}ตรวจสอบแล้ว{% else %}รอตรวจ{% endif %}</p>
+
+  <form method="post" action="/generate">
+    <input type="hidden" name="course_code" value="{{ course.code }}">
+    <div class="row">
+      <div><label>ชื่อผู้สอน</label><input name="teacher_name" value="นายธราเทพ จันทร์เขียว" required></div>
+      <div><label>ตำแหน่ง</label><input name="position" value="ครูพิเศษสอน"></div>
+    </div>
+    <label>วิทยาลัย</label>
+    <input name="college" value="วิทยาลัยการอาชีพบ้านผือ">
+    <button>สร้างไฟล์ Word โครงการสอน</button>
+  </form>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>นำเข้า CSV หลักสูตรสำนักมาตรฯ</h1>
+<section class="panel">
+<p>ใช้สำหรับเพิ่มรายวิชาจำนวนมาก เพื่อให้ระบบสร้างได้ทุกวิชาที่มีในสำนักมาตรฯ</p>
+{% if message %}<div class="success-box">{{ message }}</div>{% endif %}
+<form method="post" action="/admin/import/csv" enctype="multipart/form-data">
+<label>ไฟล์ CSV</label>
+<input type="file" name="file" accept=".csv" required>
+<button>นำเข้า</button>
+</form>
+</section>
+<section class="panel">
+<h2>หัวคอลัมน์ CSV ที่รองรับ</h2>
+<pre>code,name,level,curriculum,program_type,occupational_group,major,theory_hours,practice_hours,credits,standard_ref,learning_outcome,objectives,competencies,description,occupational_standard,assessment,source_note</pre>
+<p class="muted">ช่อง objectives และ competencies ให้คั่นแต่ละข้อด้วยเครื่องหมาย |</p>
+</section>
+{% endblock %}
